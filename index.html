@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HŞ İnşaat – Geleceği İnşa Ediyoruz</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#c8a96e;--gold2:#e2c98a;--goldglow:rgba(200,169,110,0.3);
+  --dark:#08090d;--dark2:#0e1118;--dark3:#131825;
+  --light:#f0ece3;--blue:#2e5fc2;
+  --gb:rgba(200,169,110,0.15);--gborder:rgba(200,169,110,0.2);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;background:var(--dark);color:var(--light);overflow-x:hidden}
+
+/* ── CANVAS ── */
+#bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* ── OVERLAY over canvas so sections pop ── */
+.section-bg{position:relative;z-index:2}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 56px;
+  background:rgba(8,9,13,0.75);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--gborder);transition:padding .35s,background .35s;
+}
+nav.scrolled{padding:10px 56px;background:rgba(8,9,13,0.97)}
+.logo-wrap{display:flex;align-items:center;gap:13px;text-decoration:none}
+.logo-icon{width:46px;height:46px;flex-shrink:0}
+.logo-text{display:flex;flex-direction:column;line-height:1}
+.logo-brand{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;letter-spacing:3px;color:var(--gold)}
+.logo-sub{font-size:8.5px;letter-spacing:4.5px;color:rgba(240,236,227,.45);text-transform:uppercase;margin-top:3px}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:rgba(240,236,227,.65);text-decoration:none;font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;transition:color .3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{background:linear-gradient(135deg,var(--gold),var(--gold2))!important;color:var(--dark)!important;padding:9px 22px;border-radius:2px;font-weight:700!important}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{box-shadow:0 6px 20px var(--goldglow);transform:translateY(-1px)}
+
+/* ── HERO ── */
+#hero{
+  position:relative;z-index:2;
+  height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:0 24px;
+}
+.hero-pill{
+  display:inline-block;font-size:9.5px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--gold);border:1px solid var(--gborder);padding:6px 18px;border-radius:100px;
+  margin-bottom:28px;background:rgba(200,169,110,.07);
+  animation:fadeUp .7s ease both;
+}
+.hero-h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(44px,7vw,92px);font-weight:700;line-height:1.07;
+  animation:fadeUp .8s .12s ease both;
+}
+.hero-h1 span{
+  background:linear-gradient(135deg,var(--gold) 20%,var(--gold2) 60%,#fff9e8);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-sub{
+  max-width:520px;margin:22px auto 0;font-size:15px;line-height:1.75;
+  color:rgba(240,236,227,.52);font-weight:300;
+  animation:fadeUp .9s .25s ease both;
+}
+.hero-btns{display:flex;gap:14px;margin-top:40px;flex-wrap:wrap;justify-content:center;animation:fadeUp 1s .38s ease both}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--dark);border:none;padding:15px 38px;font-size:11.5px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;cursor:pointer;border-radius:2px;text-decoration:none;transition:transform .2s,box-shadow .3s;display:inline-block}
+.btn-gold:hover{transform:translateY(-3px);box-shadow:0 10px 28px var(--goldglow)}
+.btn-outline{background:transparent;color:var(--light);border:1px solid var(--gborder);padding:15px 38px;font-size:11.5px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;cursor:pointer;border-radius:2px;text-decoration:none;backdrop-filter:blur(8px);transition:border-color .3s,color .3s,background .3s;display:inline-block}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);background:rgba(200,169,110,.07)}
+.hero-stats{display:flex;gap:56px;margin-top:72px;animation:fadeUp 1s .5s ease both}
+.stat-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--gold);line-height:1}
+.stat-lbl{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:rgba(240,236,227,.4);margin-top:5px}
+.scroll-ind{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;animation:fadeUp 1s .7s ease both}
+.scroll-ind span{font-size:8.5px;letter-spacing:3px;text-transform:uppercase;color:rgba(240,236,227,.3)}
+.scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--gold),transparent);animation:pulse 2s infinite}
+
+/* ── SHARED ── */
+.sec{padding:110px 60px;position:relative;z-index:2}
+.sec-dark{background:var(--dark2)}
+.sec-darker{background:var(--dark3)}
+.sec-darkest{background:var(--dark)}
+.shead{text-align:center;margin-bottom:60px}
+.stag{display:inline-block;font-size:9.5px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.stitle{font-family:'Playfair Display',serif;font-size:clamp(30px,4vw,50px);font-weight:700;line-height:1.15}
+.stitle em{font-style:normal;color:var(--gold)}
+.sdesc{max-width:500px;margin:14px auto 0;color:rgba(240,236,227,.48);font-size:14.5px;line-height:1.75;font-weight:300}
+.container{max-width:1200px;margin:0 auto}
+
+/* ── ABOUT ── */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.about-vis{position:relative}
+.about-canvas-wrap{
+  width:100%;aspect-ratio:4/3;
+  background:linear-gradient(135deg,#0c1120,#141d35);
+  border:1px solid var(--gborder);border-radius:6px;overflow:hidden;
+}
+.about-canvas-wrap canvas{width:100%!important;height:100%!important}
+.about-badge{
+  position:absolute;bottom:-20px;right:-20px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--dark);padding:22px;border-radius:4px;text-align:center;
+  box-shadow:0 12px 32px var(--goldglow);
+}
+.badge-big{font-size:38px;font-weight:900;font-family:'Playfair Display',serif;line-height:1}
+.badge-sm{font-size:8px;letter-spacing:1.5px;font-weight:700;text-transform:uppercase}
+.about-content h2{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;line-height:1.2;margin-bottom:18px}
+.about-content h2 em{font-style:normal;color:var(--gold)}
+.about-content p{color:rgba(240,236,227,.58);line-height:1.8;font-size:14.5px;font-weight:300;margin-bottom:14px}
+.about-list{list-style:none;margin:24px 0 30px}
+.about-list li{display:flex;align-items:center;gap:11px;font-size:13.5px;color:rgba(240,236,227,.72);padding:9px 0;border-bottom:1px solid rgba(200,169,110,.1)}
+.about-list li::before{content:'';width:5px;height:5px;background:var(--gold);border-radius:50%;flex-shrink:0}
+
+/* ── SERVICES ── */
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.srv-card{
+  background:rgba(255,255,255,.025);border:1px solid var(--gborder);border-radius:5px;
+  padding:36px 30px;transition:transform .3s,border-color .3s,box-shadow .3s;cursor:default;
+}
+.srv-card:hover{transform:translateY(-7px);border-color:rgba(200,169,110,.5);box-shadow:0 20px 56px rgba(0,0,0,.45)}
+.srv-num{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:rgba(200,169,110,.07);float:right;line-height:1;margin-top:-6px}
+.srv-icon{
+  width:54px;height:54px;background:linear-gradient(135deg,rgba(200,169,110,.14),rgba(200,169,110,.04));
+  border:1px solid rgba(200,169,110,.22);border-radius:4px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:22px;font-size:22px;
+}
+.srv-card h3{font-size:17px;font-weight:700;margin-bottom:10px;letter-spacing:.3px}
+.srv-card p{font-size:13.5px;line-height:1.7;color:rgba(240,236,227,.48);font-weight:300}
+
+/* ── PROJECTS ── */
+.proj-filter{display:flex;gap:8px;justify-content:center;margin-bottom:44px;flex-wrap:wrap}
+.flt{background:transparent;border:1px solid var(--gborder);color:rgba(240,236,227,.6);padding:8px 20px;font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;border-radius:100px;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:600;transition:all .3s}
+.flt.active,.flt:hover{background:var(--gold);border-color:var(--gold);color:var(--dark)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.proj-card{border-radius:5px;overflow:hidden;border:1px solid var(--gborder);background:var(--dark3);transition:transform .3s,box-shadow .3s;cursor:pointer}
+.proj-card:hover{transform:translateY(-5px);box-shadow:0 18px 50px rgba(0,0,0,.55)}
+.proj-card.feat{grid-column:span 2}
+.proj-img{position:relative;overflow:hidden}
+.proj-img-inner{width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;transition:transform .5s}
+.proj-card.feat .proj-img-inner{aspect-ratio:21/9}
+.proj-card:hover .proj-img-inner{transform:scale(1.05)}
+.proj-img canvas{display:block;width:100%!important;height:100%!important}
+.proj-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,9,13,.96) 0%,rgba(8,9,13,.15) 55%,transparent 100%)}
+.proj-ov-cnt{position:absolute;bottom:0;left:0;right:0;padding:22px;transform:translateY(6px);transition:transform .3s}
+.proj-card:hover .proj-ov-cnt{transform:translateY(0)}
+.proj-cat{font-size:8.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:5px}
+.proj-name{font-size:17px;font-weight:700;margin-bottom:3px}
+.proj-loc{font-size:11.5px;color:rgba(240,236,227,.45)}
+.proj-meta-bar{padding:18px 22px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--gborder)}
+.proj-metas{display:flex;gap:18px}
+.proj-metas span{font-size:10.5px;color:rgba(240,236,227,.42);letter-spacing:.3px}
+.proj-metas strong{display:block;color:var(--light);font-size:12.5px;font-weight:600;margin-bottom:1px}
+.proj-arr{width:34px;height:34px;border:1px solid var(--gborder);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);transition:background .3s,border-color .3s}
+.proj-card:hover .proj-arr{background:var(--gold);border-color:var(--gold);color:var(--dark)}
+
+/* ── NUMBERS ── */
+#numbers{
+  padding:90px 60px;
+  background:linear-gradient(135deg,var(--dark3),#0b1020);
+  border-top:1px solid var(--gborder);border-bottom:1px solid var(--gborder);
+}
+.num-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:36px;max-width:960px;margin:0 auto;text-align:center}
+.num-val{font-family:'Playfair Display',serif;font-size:56px;font-weight:700;color:var(--gold);line-height:1}
+.num-val sup{font-size:22px;vertical-align:super}
+.num-div{width:38px;height:2px;background:linear-gradient(to right,var(--gold),transparent);margin:10px auto}
+.num-lbl{font-size:10.5px;letter-spacing:1.8px;text-transform:uppercase;color:rgba(240,236,227,.42)}
+
+/* ── TEAM ── */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.team-card{
+  text-align:center;background:rgba(255,255,255,.025);
+  border:1px solid var(--gborder);border-radius:5px;padding:34px 22px;
+  transition:transform .3s,border-color .3s;
+}
+.team-card:hover{transform:translateY(-6px);border-color:rgba(200,169,110,.4)}
+.team-av{width:92px;height:92px;border-radius:50%;margin:0 auto 18px;border:2px solid var(--gborder);display:flex;align-items:center;justify-content:center;font-size:34px}
+.team-name{font-size:15.5px;font-weight:700;margin-bottom:3px}
+.team-role{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.team-bio{font-size:12.5px;color:rgba(240,236,227,.48);line-height:1.65;font-weight:300}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:72px}
+.contact-info h2{font-family:'Playfair Display',serif;font-size:38px;font-weight:700;line-height:1.2;margin-bottom:18px}
+.contact-info h2 em{font-style:normal;color:var(--gold)}
+.contact-info>p{color:rgba(240,236,227,.52);line-height:1.8;font-size:14.5px;font-weight:300;margin-bottom:36px}
+.cdet{display:flex;flex-direction:column;gap:18px}
+.citem{display:flex;align-items:flex-start;gap:14px}
+.cicon{width:42px;height:42px;background:rgba(200,169,110,.09);border:1px solid var(--gborder);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.clbl{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.cval{font-size:13.5px;color:rgba(240,236,227,.78);line-height:1.5}
+.cform{display:flex;flex-direction:column;gap:15px}
+.crow{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.cgrp{display:flex;flex-direction:column;gap:7px}
+.cgrp label{font-size:9.5px;letter-spacing:1.8px;text-transform:uppercase;color:rgba(240,236,227,.48)}
+.cgrp input,.cgrp textarea,.cgrp select{
+  background:rgba(255,255,255,.04);border:1px solid var(--gborder);border-radius:2px;
+  padding:13px 15px;color:var(--light);font-size:13.5px;font-family:'Montserrat',sans-serif;
+  outline:none;transition:border-color .3s;
+}
+.cgrp input:focus,.cgrp textarea:focus,.cgrp select:focus{border-color:var(--gold)}
+.cgrp textarea{resize:vertical;min-height:126px}
+.cgrp select option{background:var(--dark2)}
+.csub{background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--dark);border:none;padding:15px 30px;font-size:11.5px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;cursor:pointer;border-radius:2px;font-family:'Montserrat',sans-serif;transition:transform .2s,box-shadow .3s;margin-top:6px}
+.csub:hover{transform:translateY(-2px);box-shadow:0 8px 22px var(--goldglow)}
+
+/* ── FOOTER ── */
+footer{position:relative;z-index:2;background:#050508;padding:58px 60px;border-top:1px solid var(--gborder)}
+.foot-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:56px;padding-bottom:44px;border-bottom:1px solid rgba(200,169,110,.07)}
+.foot-brand p{font-size:13.5px;color:rgba(240,236,227,.38);line-height:1.7;font-weight:300;margin-top:14px;max-width:270px}
+.foot-col h4{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.foot-col ul{list-style:none}
+.foot-col ul li{margin-bottom:9px}
+.foot-col ul li a{color:rgba(240,236,227,.4);text-decoration:none;font-size:12.5px;transition:color .3s}
+.foot-col ul li a:hover{color:var(--gold)}
+.foot-bot{max-width:1200px;margin:24px auto 0;display:flex;justify-content:space-between;align-items:center}
+.foot-bot p{font-size:11.5px;color:rgba(240,236,227,.22)}
+.socials{display:flex;gap:10px}
+.soc{width:34px;height:34px;border:1px solid rgba(200,169,110,.14);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(240,236,227,.38);text-decoration:none;font-size:13px;transition:all .3s}
+.soc:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease}
+.reveal.on{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="logo-wrap">
+    <svg width="160" height="56" viewBox="0 0 160 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#b8933a"/>
+          <stop offset="100%" stop-color="#e2c96a"/>
+        </linearGradient>
+      </defs>
+      <!-- H harf -->
+      <text x="2" y="30" font-family="'Arial Black',Arial,sans-serif" font-size="30" font-weight="900" fill="#e8e0d0" letter-spacing="-1">H</text>
+      <!-- Binalar (H ile Ş arasında) -->
+      <rect x="38" y="18" width="5"  height="16" fill="url(#lg)" opacity=".9"/>
+      <rect x="45" y="12" width="5"  height="22" fill="#c8c8c8" opacity=".85"/>
+      <rect x="52" y="8"  width="6"  height="26" fill="#d0d0d0" opacity=".9"/>
+      <rect x="60" y="14" width="5"  height="20" fill="url(#lg)" opacity=".8"/>
+      <!-- Ş harf altın -->
+      <text x="64" y="30" font-family="'Arial Black',Arial,sans-serif" font-size="30" font-weight="900" fill="url(#lg)" letter-spacing="-1">Ş</text>
+      <!-- Yay çizgisi -->
+      <path d="M10 34 Q80 28 150 34" stroke="url(#lg)" stroke-width="1.2" fill="none" opacity=".7"/>
+      <!-- Alt yazı HŞ -->
+      <text x="8" y="48" font-family="'Arial Black',Arial,sans-serif" font-size="11" font-weight="900" fill="url(#lg)" letter-spacing="1">HŞ</text>
+      <text x="28" y="48" font-family="'Arial Black',Arial,sans-serif" font-size="11" font-weight="900" fill="#e8e0d0" letter-spacing="1"> İNŞAAT</text>
+      <!-- Slogan -->
+      <text x="8" y="56" font-family="Arial,sans-serif" font-size="6.5" fill="url(#lg)" letter-spacing="2" opacity=".8">GÜVENLE YÜKSELİYORUZ</text>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">Hakkımızda</a></li>
+    <li><a href="#services">Hizmetler</a></li>
+    <li><a href="#projects">Projeler</a></li>
+    <li><a href="#team">Ekibimiz</a></li>
+    <li><a href="#contact" class="nav-cta">İletişim</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-pill">İstanbul'dan Türkiye'ye Yayılan Kalite</div>
+  <h1 class="hero-h1">Geleceği<br/><span>İnşa Ediyoruz</span></h1>
+  <p class="hero-sub">HŞ İnşaat olarak her projede en yüksek kalite standartlarını, yenilikçi mimari anlayışı ve güvenilir müteahhitlik hizmetini bir araya getiriyoruz.</p>
+  <div class="hero-btns">
+    <a href="#projects" class="btn-gold">Projelerimizi Keşfet</a>
+    <a href="#contact" class="btn-outline">Teklif Al</a>
+  </div>
+  <div class="hero-stats">
+    <div><div class="stat-num">18+</div><div class="stat-lbl">Yıl Deneyim</div></div>
+    <div><div class="stat-num">240</div><div class="stat-lbl">Tamamlanan Proje</div></div>
+    <div><div class="stat-num">97%</div><div class="stat-lbl">Memnuniyet</div></div>
+  </div>
+  <div class="scroll-ind">
+    <div class="scroll-line"></div>
+    <span>Kaydır</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="sec sec-dark section-bg">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-vis reveal">
+        <div class="about-canvas-wrap">
+          <canvas id="about-canvas"></canvas>
+        </div>
+        <div class="about-badge">
+          <div class="badge-big">18</div>
+          <div class="badge-sm">Yıllık<br/>Deneyim</div>
+        </div>
+      </div>
+      <div class="about-content reveal">
+        <h2>Kalite ve Güven<br/><em>Bir Arada</em></h2>
+        <p>2006 yılından bu yana İstanbul başta olmak üzere Türkiye'nin dört bir yanında yüzlerce başarılı proje imzaladık. Konut sitelerinden ticari yapılara, altyapı çalışmalarından restorasyon projelerine kadar geniş bir yelpazede hizmet sunuyoruz.</p>
+        <p>Her projemizde müşteri memnuniyetini, iş güvenliğini ve çevresel sürdürülebilirliği ön planda tutarak sektörde fark yaratan bir anlayışla çalışıyoruz.</p>
+        <ul class="about-list">
+          <li>ISO 9001:2015 Kalite Yönetim Sistemi Sertifikalı</li>
+          <li>Tüm projelerde sigorta güvencesi ve yasal garanti</li>
+          <li>7/24 proje takip ve iletişim desteği</li>
+          <li>Çevre dostu malzeme ve enerji verimli çözümler</li>
+          <li>Zamanında teslim garantisi</li>
+        </ul>
+        <a href="#contact" class="btn-gold">Bizimle Çalışın</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" class="sec sec-darker section-bg">
+  <div class="container">
+    <div class="shead reveal">
+      <div class="stag">Ne Yapıyoruz</div>
+      <h2 class="stitle">Kapsamlı <em>İnşaat Hizmetleri</em></h2>
+      <p class="sdesc">Planlama aşamasından teslimata kadar tüm süreçleri profesyonelce yönetiyoruz.</p>
+    </div>
+    <div class="srv-grid">
+      <div class="srv-card reveal"><span class="srv-num">01</span><div class="srv-icon">🏗️</div><h3>Konut Projeleri</h3><p>Lüks villalardan modern apartman komplekslerine kadar her ölçekte konut projesi geliştiriyor ve inşa ediyoruz.</p></div>
+      <div class="srv-card reveal"><span class="srv-num">02</span><div class="srv-icon">🏢</div><h3>Ticari Yapılar</h3><p>AVM, ofis binaları, oteller ve endüstriyel tesisler için anahtar teslim çözümler sunuyoruz.</p></div>
+      <div class="srv-card reveal"><span class="srv-num">03</span><div class="srv-icon">🔧</div><h3>Restorasyon & Tadilat</h3><p>Tarihi yapıların restorasyonundan modern dönüşüm projelerine kadar her türlü tadilat işini gerçekleştiriyoruz.</p></div>
+      <div class="srv-card reveal"><span class="srv-num">04</span><div class="srv-icon">🏗</div><h3>Altyapı Çalışmaları</h3><p>Yol, köprü, tünel ve altyapı projeleri için güçlü mühendislik kadromuzla çözüm üretiyoruz.</p></div>
+      <div class="srv-card reveal"><span class="srv-num">05</span><div class="srv-icon">🎨</div><h3>İç Mimarlık</h3><p>Mekanlarınızı hayalinizdeki hale getirmek için yaratıcı tasarım ve uygulama hizmetleri sunuyoruz.</p></div>
+      <div class="srv-card reveal"><span class="srv-num">06</span><div class="srv-icon">📐</div><h3>Proje Danışmanlığı</h3><p>Fizibilite çalışmalarından ruhsat süreçlerine, maliyet analizinden proje yönetimine kapsamlı danışmanlık.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="sec sec-dark section-bg">
+  <div class="container">
+    <div class="shead reveal">
+      <div class="stag">Portföyümüz</div>
+      <h2 class="stitle">Seçkin <em>Projelerimiz</em></h2>
+      <p class="sdesc">Her biri titizlikle tamamlanmış imza projelerimizden bir seçki.</p>
+    </div>
+    <div class="proj-filter">
+      <button class="flt active">Tümü</button>
+      <button class="flt">Konut</button>
+      <button class="flt">Ticari</button>
+      <button class="flt">Altyapı</button>
+      <button class="flt">Restorasyon</button>
+    </div>
+    <div class="proj-grid">
+
+      <div class="proj-card feat reveal">
+        <div class="proj-img">
+          <div class="proj-img-inner" style="background:linear-gradient(135deg,#0a1428,#152040,#080f1e)">
+            <canvas class="proj-canvas" data-theme="gold-tower" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+          </div>
+          <div class="proj-ov"></div>
+          <div class="proj-ov-cnt">
+            <div class="proj-cat">Konut Projesi</div>
+            <div class="proj-name">Boğaz Panorama Residence</div>
+            <div class="proj-loc">Beşiktaş, İstanbul</div>
+          </div>
+        </div>
+        <div class="proj-meta-bar">
+          <div class="proj-metas">
+            <span><strong>2023</strong>Tamamlandı</span>
+            <span><strong>148 Daire</strong>Toplam Ünite</span>
+            <span><strong>82.000 m²</strong>İnşaat Alanı</span>
+          </div>
+          <div class="proj-arr">→</div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-img">
+          <div class="proj-img-inner" style="background:linear-gradient(135deg,#141030,#221845,#0d0a20)">
+            <canvas class="proj-canvas" data-theme="blue-office" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+          </div>
+          <div class="proj-ov"></div>
+          <div class="proj-ov-cnt">
+            <div class="proj-cat">Ticari Yapı</div>
+            <div class="proj-name">Levent İş Merkezi</div>
+            <div class="proj-loc">Levent, İstanbul</div>
+          </div>
+        </div>
+        <div class="proj-meta-bar">
+          <div class="proj-metas">
+            <span><strong>2022</strong>Tamamlandı</span>
+            <span><strong>24.500 m²</strong>Ofis Alanı</span>
+          </div>
+          <div class="proj-arr">→</div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-img">
+          <div class="proj-img-inner" style="background:linear-gradient(135deg,#0a2010,#123018,#061008)">
+            <canvas class="proj-canvas" data-theme="green-arch" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+          </div>
+          <div class="proj-ov"></div>
+          <div class="proj-ov-cnt">
+            <div class="proj-cat">Restorasyon</div>
+            <div class="proj-name">Tarihi Konak Restorasyonu</div>
+            <div class="proj-loc">Balıkesir, Türkiye</div>
+          </div>
+        </div>
+        <div class="proj-meta-bar">
+          <div class="proj-metas">
+            <span><strong>2024</strong>Devam Ediyor</span>
+            <span><strong>3.200 m²</strong>Alan</span>
+          </div>
+          <div class="proj-arr">→</div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-img">
+          <div class="proj-img-inner" style="background:linear-gradient(135deg,#1a1200,#2e2000,#0e0c00)">
+            <canvas class="proj-canvas" data-theme="gold-bridge" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+          </div>
+          <div class="proj-ov"></div>
+          <div class="proj-ov-cnt">
+            <div class="proj-cat">Altyapı</div>
+            <div class="proj-name">Gebze Köprüsü Projesi</div>
+            <div class="proj-loc">Kocaeli, Türkiye</div>
+          </div>
+        </div>
+        <div class="proj-meta-bar">
+          <div class="proj-metas">
+            <span><strong>2021</strong>Tamamlandı</span>
+            <span><strong>1.2 km</strong>Uzunluk</span>
+          </div>
+          <div class="proj-arr">→</div>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-img">
+          <div class="proj-img-inner" style="background:linear-gradient(135deg,#001820,#003040,#000e15)">
+            <canvas class="proj-canvas" data-theme="teal-mall" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+          </div>
+          <div class="proj-ov"></div>
+          <div class="proj-ov-cnt">
+            <div class="proj-cat">Ticari</div>
+            <div class="proj-name">Aqua Alışveriş Merkezi</div>
+            <div class="proj-loc">Bursa, Türkiye</div>
+          </div>
+        </div>
+        <div class="proj-meta-bar">
+          <div class="proj-metas">
+            <span><strong>2023</strong>Tamamlandı</span>
+            <span><strong>45.000 m²</strong>Alan</span>
+          </div>
+          <div class="proj-arr">→</div>
+        </div>
+      </div>
+
+      <div class="proj-card feat reveal">
+        <div class="proj-img">
+          <div class="proj-img-inner" style="background:linear-gradient(135deg,#1e0808,#360f0f,#0e0404)">
+            <canvas class="proj-canvas" data-theme="red-complex" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+          </div>
+          <div class="proj-ov"></div>
+          <div class="proj-ov-cnt">
+            <div class="proj-cat">Konut Kompleksi</div>
+            <div class="proj-name">Kartal Marina Evleri</div>
+            <div class="proj-loc">Kartal, İstanbul</div>
+          </div>
+        </div>
+        <div class="proj-meta-bar">
+          <div class="proj-metas">
+            <span><strong>2024</strong>Devam Ediyor</span>
+            <span><strong>320 Daire</strong>Toplam Ünite</span>
+            <span><strong>136.000 m²</strong>İnşaat Alanı</span>
+          </div>
+          <div class="proj-arr">→</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section id="numbers" class="section-bg">
+  <div class="num-grid">
+    <div class="reveal"><div class="num-val" data-target="240" data-suf="+">0+</div><div class="num-div"></div><div class="num-lbl">Tamamlanan Proje</div></div>
+    <div class="reveal"><div class="num-val" data-target="18" data-suf="+">0+</div><div class="num-div"></div><div class="num-lbl">Yıl Deneyim</div></div>
+    <div class="reveal"><div class="num-val" data-target="52" data-suf="">0</div><div class="num-div"></div><div class="num-lbl">Uzman Kadro</div></div>
+    <div class="reveal"><div class="num-val" data-target="4.8" data-suf="★" data-dec="1">0★</div><div class="num-div"></div><div class="num-lbl">Müşteri Puanı</div></div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section id="team" class="sec sec-dark section-bg">
+  <div class="container">
+    <div class="shead reveal">
+      <div class="stag">Kadromuz</div>
+      <h2 class="stitle">Güçlü <em>Ekibimiz</em></h2>
+      <p class="sdesc">Alanında uzman, deneyimli profesyonellerden oluşan ekibimizle tanışın.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card reveal"><div class="team-av" style="background:linear-gradient(135deg,#1a2040,#2a3060)">👷</div><div class="team-name">Hasan Şahin</div><div class="team-role">Genel Müdür</div><div class="team-bio">25 yıllık sektör deneyimiyle şirketimizin vizyonunu ve stratejik yönünü belirliyor.</div></div>
+      <div class="team-card reveal"><div class="team-av" style="background:linear-gradient(135deg,#201a40,#302a60)">🏛️</div><div class="team-name">Ayşe Kaya</div><div class="team-role">Baş Mimar</div><div class="team-bio">Uluslararası deneyimiyle her projede estetik ve fonksiyonelliği harmanlıyor.</div></div>
+      <div class="team-card reveal"><div class="team-av" style="background:linear-gradient(135deg,#201a10,#40350f)">⚙️</div><div class="team-name">Mehmet Demir</div><div class="team-role">Proje Müdürü</div><div class="team-bio">200+ projeyi zamanında ve bütçe dahilinde tamamlama başarısına sahip.</div></div>
+      <div class="team-card reveal"><div class="team-av" style="background:linear-gradient(135deg,#0a1a10,#0f3020)">📐</div><div class="team-name">Fatma Yıldız</div><div class="team-role">İnşaat Mühendisi</div><div class="team-bio">Statik hesap ve yapısal dönüşüm projelerinde 15 yıllık uzman deneyim.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec sec-darker section-bg">
+  <div class="container">
+    <div class="shead reveal">
+      <div class="stag">Bize Ulaşın</div>
+      <h2 class="stitle">Projenizi <em>Konuşalım</em></h2>
+      <p class="sdesc">Hayalinizdeki projeyi gerçeğe dönüştürmek için ilk adımı birlikte atalım.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h2>Sizinle<br/><em>Çalışmaya</em> Hazırız</h2>
+        <p>Konut projesinden ticari yapılara, restorasyon çalışmalarından altyapı projelerine kadar tüm ihtiyaçlarınız için ekibimizle iletişime geçin.</p>
+        <div class="cdet">
+          <div class="citem"><div class="cicon">📍</div><div><div class="clbl">Adres</div><div class="cval">Mecidiyeköy Mah. Büyükdere Cad. No:74<br/>Şişli, İstanbul 34387</div></div></div>
+          <div class="citem"><div class="cicon">📞</div><div><div class="clbl">Telefon</div><div class="cval">+90 (212) 555 01 23</div></div></div>
+          <div class="citem"><div class="cicon">✉️</div><div><div class="clbl">E-posta</div><div class="cval">info@hsinsaat.com.tr</div></div></div>
+          <div class="citem"><div class="cicon">🕐</div><div><div class="clbl">Çalışma Saatleri</div><div class="cval">Pzt–Cum: 08:00–18:00 · Cmt: 09:00–14:00</div></div></div>
+        </div>
+      </div>
+      <form class="cform reveal" onsubmit="return false">
+        <div class="crow">
+          <div class="cgrp"><label>Ad Soyad</label><input type="text" placeholder="Adınız Soyadınız"/></div>
+          <div class="cgrp"><label>Telefon</label><input type="tel" placeholder="+90 500 000 00 00"/></div>
+        </div>
+        <div class="cgrp"><label>E-posta</label><input type="email" placeholder="ornek@mail.com"/></div>
+        <div class="cgrp"><label>Proje Türü</label>
+          <select><option value="">Seçiniz...</option><option>Konut Projesi</option><option>Ticari Yapı</option><option>Restorasyon & Tadilat</option><option>Altyapı</option><option>İç Mimarlık</option><option>Danışmanlık</option></select>
+        </div>
+        <div class="cgrp"><label>Mesajınız</label><textarea placeholder="Projeniz hakkında kısaca bilgi verir misiniz?"></textarea></div>
+        <button type="submit" class="csub">Teklif Talep Et →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-inner">
+    <div class="foot-brand">
+      <a href="#" class="logo-wrap">
+        <svg width="160" height="56" viewBox="0 0 160 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs><linearGradient id="lg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#b8933a"/><stop offset="100%" stop-color="#e2c96a"/></linearGradient></defs>
+          <text x="2" y="30" font-family="'Arial Black',Arial,sans-serif" font-size="30" font-weight="900" fill="#e8e0d0" letter-spacing="-1">H</text>
+          <rect x="38" y="18" width="5"  height="16" fill="url(#lg3)" opacity=".9"/>
+          <rect x="45" y="12" width="5"  height="22" fill="#c8c8c8" opacity=".85"/>
+          <rect x="52" y="8"  width="6"  height="26" fill="#d0d0d0" opacity=".9"/>
+          <rect x="60" y="14" width="5"  height="20" fill="url(#lg3)" opacity=".8"/>
+          <text x="64" y="30" font-family="'Arial Black',Arial,sans-serif" font-size="30" font-weight="900" fill="url(#lg3)" letter-spacing="-1">Ş</text>
+          <path d="M10 34 Q80 28 150 34" stroke="url(#lg3)" stroke-width="1.2" fill="none" opacity=".7"/>
+          <text x="8" y="48" font-family="'Arial Black',Arial,sans-serif" font-size="11" font-weight="900" fill="url(#lg3)" letter-spacing="1">HŞ</text>
+          <text x="28" y="48" font-family="'Arial Black',Arial,sans-serif" font-size="11" font-weight="900" fill="#e8e0d0" letter-spacing="1"> İNŞAAT</text>
+          <text x="8" y="56" font-family="Arial,sans-serif" font-size="6.5" fill="url(#lg3)" letter-spacing="2" opacity=".8">GÜVENLE YÜKSELİYORUZ</text>
+        </svg>
+      </a>
+      <p>2006 yılından bu yana Türkiye'nin dört bir yanında kaliteli, güvenilir ve yenilikçi inşaat projeleri hayata geçiriyoruz.</p>
+    </div>
+    <div class="foot-col"><h4>Hizmetler</h4><ul><li><a href="#">Konut Projeleri</a></li><li><a href="#">Ticari Yapılar</a></li><li><a href="#">Restorasyon</a></li><li><a href="#">Altyapı</a></li><li><a href="#">İç Mimarlık</a></li><li><a href="#">Danışmanlık</a></li></ul></div>
+    <div class="foot-col"><h4>Şirket</h4><ul><li><a href="#">Hakkımızda</a></li><li><a href="#">Ekibimiz</a></li><li><a href="#">Kariyer</a></li><li><a href="#">Haberler</a></li><li><a href="#">İletişim</a></li></ul></div>
+    <div class="foot-col"><h4>Projeler</h4><ul><li><a href="#">Devam Eden</a></li><li><a href="#">Tamamlanan</a></li><li><a href="#">Referanslar</a></li></ul></div>
+  </div>
+  <div class="foot-bot">
+    <p>© 2024 HŞ İnşaat Müteahhitlik Ltd. Şti. — Tüm Hakları Saklıdır.</p>
+    <div class="socials">
+      <a href="#" class="soc">in</a>
+      <a href="#" class="soc">𝕏</a>
+      <a href="#" class="soc">f</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   MAIN 3D BACKGROUND — Pure Canvas 2D, no CDN
+═══════════════════════════════════════════════════ */
+(function(){
+  const cv = document.getElementById('bg');
+  const ctx = cv.getContext('2d');
+  let W, H, mx=0, my=0, camX=0, camY=0;
+
+  function resize(){
+    W = cv.width  = window.innerWidth;
+    H = cv.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+  document.addEventListener('mousemove', e=>{
+    mx = (e.clientX/window.innerWidth  - .5)*2;
+    my = (e.clientY/window.innerHeight - .5)*2;
+  });
+
+  /* ── Buildings ── */
+  const GOLD  = 'rgba(200,169,110,';
+  const BLUE  = 'rgba(46,95,194,';
+  const WHITE = 'rgba(240,236,227,';
+
+  const buildings = [
+    {x:.50,w:60,h:380,col:GOLD ,win:{r:7,c:3}},
+    {x:.38,w:44,h:280,col:GOLD ,win:{r:5,c:2}},
+    {x:.62,w:50,h:240,col:GOLD ,win:{r:4,c:2}},
+    {x:.25,w:36,h:200,col:BLUE ,win:{r:4,c:2}},
+    {x:.72,w:40,h:320,col:BLUE ,win:{r:6,c:2}},
+    {x:.14,w:30,h:160,col:WHITE,win:{r:3,c:2}},
+    {x:.84,w:28,h:180,col:WHITE,win:{r:3,c:2}},
+    {x:.08,w:26,h:120,col:WHITE,win:{r:2,c:2}},
+    {x:.91,w:22,h:140,col:GOLD ,win:{r:3,c:2}},
+    {x:.32,w:20,h:100,col:WHITE,win:{r:2,c:1}},
+    {x:.67,w:18,h:80 ,col:WHITE,win:{r:2,c:1}},
+  ];
+
+  /* ── Particles ── */
+  const PARTS = 180;
+  const pts = Array.from({length:PARTS}, ()=>({
+    x: Math.random(),
+    y: Math.random(),
+    s: Math.random()*.9+.3,
+    sp: Math.random()*.0004+.0002,
+    o: Math.random()*.6+.2
+  }));
+
+  /* ── Crane ── */
+  const cranes = [
+    {bx:.50, t:0},
+    {bx:.72, t:Math.PI},
+  ];
+
+  let t = 0;
+
+  function drawBuilding(b, baseY, alpha){
+    const bx = b.x * W + camX*.5;
+    const bh = b.h;
+    const bw = b.w;
+    const by = baseY - bh;
+    const col = b.col;
+
+    /* fill */
+    const grd = ctx.createLinearGradient(bx,by,bx,baseY);
+    grd.addColorStop(0, col+(alpha*.18)+')');
+    grd.addColorStop(1, col+(alpha*.06)+')');
+    ctx.fillStyle = grd;
+    ctx.fillRect(bx-bw/2, by, bw, bh);
+
+    /* outline */
+    ctx.strokeStyle = col+(alpha*.55)+')';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(bx-bw/2, by, bw, bh);
+
+    /* windows */
+    const {r,c} = b.win;
+    const ww = (bw*.7)/c, wh = (bh*.75)/r;
+    for(let ri=0; ri<r; ri++){
+      for(let ci=0; ci<c; ci++){
+        const wx = bx - bw/2 + bw*.15 + ci*ww + ww*.1;
+        const wy = by + bh*.1 + ri*wh + wh*.1;
+        const lit = Math.sin(t*1.3+ri*1.7+ci*2.3+b.x*5) > -.3;
+        ctx.fillStyle = lit
+          ? col+(alpha*(0.18+Math.sin(t*.8+ri+ci)*.07))+')'
+          : col+(alpha*.04)+')';
+        ctx.fillRect(wx, wy, ww*.8, wh*.75);
+      }
+    }
+  }
+
+  function drawCrane(cr, baseY){
+    const bx = cr.bx*W + camX*.3;
+    const ang = Math.sin(t*.4 + cr.t)*.5;
+    ctx.save();
+    ctx.translate(bx, baseY);
+    ctx.strokeStyle = GOLD+'.5)';
+    ctx.lineWidth = 1.5;
+    /* pole */
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,-220); ctx.stroke();
+    /* arm */
+    ctx.save();
+    ctx.translate(0,-220);
+    ctx.rotate(ang);
+    ctx.beginPath(); ctx.moveTo(-30,0); ctx.lineTo(120,0); ctx.stroke();
+    /* cable */
+    ctx.strokeStyle = GOLD+'.35)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(100,0); ctx.lineTo(100,60); ctx.stroke();
+    /* hook */
+    ctx.beginPath();
+    ctx.arc(100,64,4,0,Math.PI*2);
+    ctx.fillStyle = GOLD+'.5)';
+    ctx.fill();
+    ctx.restore();
+    ctx.restore();
+  }
+
+  function drawGrid(baseY){
+    /* perspective grid */
+    const vanX = W/2 + camX*.2;
+    const vanY = baseY - 80;
+    const lines = 14;
+    for(let i=0; i<=lines; i++){
+      const x = (i/lines)*W;
+      ctx.beginPath();
+      ctx.moveTo(vanX, vanY);
+      ctx.lineTo(x, baseY+40);
+      ctx.strokeStyle = GOLD+'.08)';
+      ctx.lineWidth = .8;
+      ctx.stroke();
+    }
+    /* horizontal */
+    for(let j=0; j<5; j++){
+      const prog = j/5;
+      const y = vanY + (baseY+40-vanY)*(.3+prog*.7);
+      const halfW = (prog*.7+.1)*W*.55;
+      ctx.beginPath();
+      ctx.moveTo(vanX-halfW, y);
+      ctx.lineTo(vanX+halfW, y);
+      ctx.strokeStyle = BLUE+'.12)';
+      ctx.lineWidth = .7;
+      ctx.stroke();
+    }
+  }
+
+  function drawParticles(){
+    pts.forEach(p=>{
+      p.y -= p.sp;
+      if(p.y < 0) p.y = 1;
+      const px = p.x*W + camX*.1;
+      const py = p.y*H;
+      ctx.beginPath();
+      ctx.arc(px, py, p.s, 0, Math.PI*2);
+      ctx.fillStyle = GOLD+(p.o*.6+Math.sin(t*1.5+p.x*10)*.15)+')';
+      ctx.fill();
+    });
+  }
+
+  function drawScanLine(){
+    const y = ((t*.03)%1)*H;
+    const g = ctx.createLinearGradient(0,y-60,0,y+60);
+    g.addColorStop(0,'transparent');
+    g.addColorStop(.5,GOLD+'.04)');
+    g.addColorStop(1,'transparent');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,y-60,W,120);
+  }
+
+  function drawGlow(bx, by, col, rad, a){
+    const g = ctx.createRadialGradient(bx,by,0,bx,by,rad);
+    g.addColorStop(0,col+a+')');
+    g.addColorStop(1,col+'0)');
+    ctx.fillStyle = g;
+    ctx.fillRect(bx-rad,by-rad,rad*2,rad*2);
+  }
+
+  function frame(){
+    t += .008;
+    camX += (mx*18 - camX)*.025;
+    camY += (my*8  - camY)*.025;
+
+    ctx.clearRect(0,0,W,H);
+
+    /* sky gradient */
+    const sky = ctx.createLinearGradient(0,0,0,H);
+    sky.addColorStop(0,'#06080f');
+    sky.addColorStop(.6,'#0b1020');
+    sky.addColorStop(1,'#111830');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0,0,W,H);
+
+    const baseY = H*.78 + camY*3;
+
+    /* glow spots */
+    drawGlow(W*.5+camX*.3, baseY-60, GOLD, 260, .06);
+    drawGlow(W*.25+camX*.2, baseY-40, BLUE,  180, .05);
+    drawGlow(W*.75+camX*.2, baseY-30, BLUE,  160, .04);
+
+    drawGrid(baseY);
+
+    /* sort buildings by size (far first) */
+    const sorted = [...buildings].sort((a,b)=>a.h-b.h);
+    sorted.forEach((b,i) => {
+      const alpha = .5 + (i/sorted.length)*.5;
+      drawBuilding(b, baseY, alpha);
+    });
+
+    cranes.forEach(cr => drawCrane(cr, baseY));
+
+    /* ground line */
+    const gl = ctx.createLinearGradient(0,0,W,0);
+    gl.addColorStop(0,'transparent');
+    gl.addColorStop(.2,GOLD+'.3)');
+    gl.addColorStop(.5,GOLD+'.5)');
+    gl.addColorStop(.8,GOLD+'.3)');
+    gl.addColorStop(1,'transparent');
+    ctx.strokeStyle = gl;
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0,baseY); ctx.lineTo(W,baseY); ctx.stroke();
+
+    /* reflection shimmer */
+    const ref = ctx.createLinearGradient(0,baseY,0,baseY+80);
+    ref.addColorStop(0,GOLD+'.08)');
+    ref.addColorStop(1,'transparent');
+    ctx.fillStyle = ref;
+    ctx.fillRect(0,baseY,W,80);
+
+    drawParticles();
+    drawScanLine();
+
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+
+
+/* ═══════════════════════════════════════════════════
+   PROJECT CARD CANVASES
+═══════════════════════════════════════════════════ */
+function drawProjectCanvas(cv, theme){
+  const ctx = cv.getContext('2d');
+  const W = cv.width = cv.offsetWidth || 600;
+  const H = cv.height = cv.offsetHeight || 300;
+
+  const themes = {
+    'gold-tower': { accent:'rgba(200,169,110,', shapes:'tower' },
+    'blue-office': { accent:'rgba(100,140,220,', shapes:'grid' },
+    'green-arch':  { accent:'rgba(100,200,130,', shapes:'arch' },
+    'gold-bridge': { accent:'rgba(200,169,110,', shapes:'bridge' },
+    'teal-mall':   { accent:'rgba(80,200,200,', shapes:'mall' },
+    'red-complex': { accent:'rgba(200,110,100,', shapes:'complex' },
+  };
+  const th = themes[theme] || themes['gold-tower'];
+  const a = th.accent;
+
+  ctx.clearRect(0,0,W,H);
+
+  /* draw shape */
+  ctx.strokeStyle = a+'.6)';
+  ctx.lineWidth = 1.2;
+
+  if(th.shapes === 'tower'){
+    /* tall towers skyline */
+    [[W*.3,H*.05,50,H*.9],[W*.5,H*.15,40,H*.8],[W*.65,H*.25,36,H*.7],[W*.15,H*.3,28,H*.65],[W*.8,H*.2,32,H*.75]].forEach(([x,y,w,bh])=>{
+      ctx.strokeRect(x-w/2,y,w,bh);
+      for(let r=0;r<5;r++) for(let c=0;c<2;c++){
+        ctx.fillStyle = a+(.1+Math.random()*.15)+')';
+        ctx.fillRect(x-w/2+w*.1+c*(w*.38),y+bh*.08+r*(bh*.15),w*.3,bh*.1);
+      }
+    });
+  } else if(th.shapes === 'grid'){
+    /* glass office */
+    ctx.strokeRect(W*.15,H*.08,W*.7,H*.82);
+    for(let r=0;r<7;r++) for(let c=0;c<6;c++){
+      ctx.fillStyle = a+(Math.random()>.4?.2:.06)+')';
+      ctx.fillRect(W*.18+c*(W*.11),H*.12+r*(H*.1),W*.09,H*.08);
+    }
+  } else if(th.shapes === 'arch'){
+    /* arched window */
+    ctx.beginPath();
+    ctx.arc(W/2,H*.4,W*.25,Math.PI,0);
+    ctx.lineTo(W/2+W*.25,H*.9);
+    ctx.lineTo(W/2-W*.25,H*.9);
+    ctx.closePath();
+    ctx.stroke();
+    ctx.strokeRect(W*.3,H*.5,W*.4,H*.4);
+  } else if(th.shapes === 'bridge'){
+    ctx.beginPath();
+    ctx.moveTo(W*.05,H*.55);
+    ctx.quadraticCurveTo(W/2,H*.15,W*.95,H*.55);
+    ctx.stroke();
+    for(let i=0;i<8;i++){
+      ctx.beginPath();
+      const bx = W*.1+i*(W*.1);
+      ctx.moveTo(bx, H*.2+(i%2)*H*.1);
+      ctx.lineTo(bx, H*.9);
+      ctx.stroke();
+    }
+  } else if(th.shapes === 'mall'){
+    ctx.strokeRect(W*.05,H*.2,W*.9,H*.65);
+    for(let i=0;i<4;i++){
+      ctx.fillStyle = a+'.12)';
+      ctx.fillRect(W*.1+i*(W*.22),H*.25,W*.16,H*.4);
+    }
+    ctx.beginPath();
+    ctx.moveTo(W*.05,H*.2);
+    ctx.lineTo(W/2,H*.05);
+    ctx.lineTo(W*.95,H*.2);
+    ctx.stroke();
+  } else {
+    /* complex */
+    [[W*.2,H*.1,W*.2,H*.85],[W*.4,H*.25,W*.35,H*.7],[W*.65,H*.15,W*.18,H*.8]].forEach(([x,y,w,bh])=>{
+      ctx.strokeRect(x,y,w,bh);
+      for(let r=0;r<4;r++) for(let c=0;c<3;c++){
+        ctx.fillStyle = a+(.08+Math.random()*.12)+')';
+        ctx.fillRect(x+w*.05+c*(w*.3),y+bh*.1+r*(bh*.18),w*.22,bh*.12);
+      }
+    });
+  }
+
+  /* ground line */
+  ctx.strokeStyle = a+'.4)';
+  ctx.beginPath(); ctx.moveTo(0,H*.93); ctx.lineTo(W,H*.93); ctx.stroke();
+
+  /* particles */
+  for(let i=0;i<30;i++){
+    ctx.beginPath();
+    ctx.arc(Math.random()*W,Math.random()*H,.8+Math.random()*1.2,0,Math.PI*2);
+    ctx.fillStyle = a+(Math.random()*.3+.1)+')';
+    ctx.fill();
+  }
+}
+
+window.addEventListener('load', ()=>{
+  document.querySelectorAll('.proj-canvas').forEach(cv=>{
+    drawProjectCanvas(cv, cv.dataset.theme);
+  });
+});
+
+
+/* ═══════════════════════════════════════════════════
+   ABOUT SECTION CANVAS
+═══════════════════════════════════════════════════ */
+(function(){
+  const cv = document.getElementById('about-canvas');
+  if(!cv) return;
+  const ctx = cv.getContext('2d');
+  let t = 0;
+  const GOLD = 'rgba(200,169,110,';
+  const BLUE = 'rgba(80,120,220,';
+
+  function draw(){
+    const W = cv.width  = cv.offsetParent ? cv.offsetParent.offsetWidth  : 500;
+    const H = cv.height = cv.offsetParent ? cv.offsetParent.offsetHeight : 375;
+    ctx.clearRect(0,0,W,H);
+
+    const baseY = H*.82;
+
+    /* grid */
+    for(let i=0;i<=8;i++){
+      const x = (i/8)*W;
+      ctx.beginPath(); ctx.moveTo(W*.5,baseY-80); ctx.lineTo(x,baseY+20); ctx.stroke();
+      ctx.strokeStyle = GOLD+'.07)'; ctx.lineWidth=.7;
+    }
+
+    /* buildings */
+    const blds = [
+      {x:.18,w:46,h:180},{x:.35,w:34,h:130},{x:.5,w:60,h:260},{x:.65,w:38,h:150},{x:.82,w:42,h:190}
+    ];
+    blds.forEach((b,i)=>{
+      const bx = b.x*W, bh=b.h, bw=b.w, by=baseY-bh;
+      const g = ctx.createLinearGradient(bx,by,bx,baseY);
+      g.addColorStop(0,GOLD+(.15+Math.sin(t+i)*.04)+')');
+      g.addColorStop(1,GOLD+'.04)');
+      ctx.fillStyle = g;
+      ctx.fillRect(bx-bw/2,by,bw,bh);
+      ctx.strokeStyle = GOLD+(.4+Math.sin(t*.7+i)*.15)+')';
+      ctx.lineWidth=1;
+      ctx.strokeRect(bx-bw/2,by,bw,bh);
+      /* windows */
+      for(let r=0;r<4;r++) for(let c=0;c<2;c++){
+        const lit = Math.sin(t*1.2+r*2+c*3+i)>.1;
+        ctx.fillStyle = lit ? GOLD+'.22)' : GOLD+'.04)';
+        ctx.fillRect(bx-bw/2+bw*.12+c*(bw*.42), by+bh*.08+r*(bh*.18), bw*.32, bh*.12);
+      }
+    });
+
+    /* crane */
+    ctx.save();
+    ctx.translate(W*.5, baseY);
+    const ang = Math.sin(t*.5)*.4;
+    ctx.strokeStyle = GOLD+'.5)'; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(0,-180); ctx.stroke();
+    ctx.save();
+    ctx.translate(0,-180); ctx.rotate(ang);
+    ctx.beginPath(); ctx.moveTo(-20,0); ctx.lineTo(90,0); ctx.stroke();
+    ctx.strokeStyle = GOLD+'.3)'; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(80,0); ctx.lineTo(80,40); ctx.stroke();
+    ctx.restore(); ctx.restore();
+
+    /* ground */
+    const gl = ctx.createLinearGradient(0,0,W,0);
+    gl.addColorStop(0,'transparent'); gl.addColorStop(.5,GOLD+'.4)'); gl.addColorStop(1,'transparent');
+    ctx.strokeStyle=gl; ctx.lineWidth=1;
+    ctx.beginPath(); ctx.moveTo(0,baseY); ctx.lineTo(W,baseY); ctx.stroke();
+
+    /* scan line */
+    const sy = ((t*.025)%1)*H;
+    const sg = ctx.createLinearGradient(0,sy-30,0,sy+30);
+    sg.addColorStop(0,'transparent'); sg.addColorStop(.5,GOLD+'.05)'); sg.addColorStop(1,'transparent');
+    ctx.fillStyle=sg; ctx.fillRect(0,sy-30,W,60);
+
+    t+=.012;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+
+/* ═══════════════════════════════════════════════════
+   NAV SCROLL
+═══════════════════════════════════════════════════ */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled', scrollY>40);
+});
+
+
+/* ═══════════════════════════════════════════════════
+   REVEAL ON SCROLL
+═══════════════════════════════════════════════════ */
+const revObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('on');
+      revObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.06, rootMargin:'0px 0px -30px 0px'});
+
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+
+/* Absolute fallback — show everything after 1.5s */
+setTimeout(()=>{ document.querySelectorAll('.reveal').forEach(el=>el.classList.add('on')); }, 1500);
+
+
+/* ═══════════════════════════════════════════════════
+   COUNTER ANIMATION
+═══════════════════════════════════════════════════ */
+const numObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.currentTarget.querySelectorAll('[data-target]').forEach(el=>{
+      const target = parseFloat(el.dataset.target);
+      const suf    = el.dataset.suf||'';
+      const dec    = parseInt(el.dataset.dec||'0');
+      let cur = 0, steps = 60;
+      const inc = target/steps;
+      const tmr = setInterval(()=>{
+        cur = Math.min(cur+inc, target);
+        el.textContent = (dec>0 ? cur.toFixed(dec) : Math.floor(cur)) + suf;
+        if(cur>=target) clearInterval(tmr);
+      },22);
+    });
+    numObs.disconnect();
+  });
+},{threshold:.3});
+const numSec = document.getElementById('numbers');
+if(numSec) numObs.observe(numSec);
+
+
+/* ═══════════════════════════════════════════════════
+   FILTER BUTTONS
+═══════════════════════════════════════════════════ */
+document.querySelectorAll('.flt').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.flt').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
