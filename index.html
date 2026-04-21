@@ -229,8 +229,124 @@ footer{position:relative;z-index:2;background:#050508;padding:58px 60px;border-t
 /* ── ANIMATIONS ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+@keyframes menuSlide{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
 .reveal{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease}
 .reveal.on{opacity:1;transform:translateY(0)}
+
+/* ── HAMBURGER ── */
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px;z-index:200}
+.hamburger span{display:block;width:26px;height:2px;background:var(--gold);border-radius:2px;transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ══════════════════════════════════
+   TABLET  (≤1024px)
+══════════════════════════════════ */
+@media(max-width:1024px){
+  nav{padding:14px 32px}
+  nav.scrolled{padding:10px 32px}
+  .sec{padding:80px 32px}
+  .about-grid{gap:48px}
+  .srv-grid{grid-template-columns:repeat(2,1fr)}
+  .proj-grid{grid-template-columns:repeat(2,1fr)}
+  .proj-card.feat{grid-column:span 2}
+  .team-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-grid{gap:48px}
+  .foot-inner{grid-template-columns:1fr 1fr;gap:36px}
+  #numbers{padding:70px 32px}
+  .num-grid{grid-template-columns:repeat(2,1fr);gap:32px}
+}
+
+/* ══════════════════════════════════
+   MOBILE  (≤768px)
+══════════════════════════════════ */
+@media(max-width:768px){
+  /* Nav */
+  nav{padding:12px 20px}
+  nav.scrolled{padding:10px 20px}
+  .hamburger{display:flex}
+  .nav-links{
+    display:none;flex-direction:column;gap:0;
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    background:rgba(8,9,13,0.98);backdrop-filter:blur(20px);
+    align-items:center;justify-content:center;
+    z-index:150;
+  }
+  .nav-links.open{display:flex;animation:menuSlide .3s ease}
+  .nav-links li{width:100%;text-align:center}
+  .nav-links a{display:block;padding:18px 0;font-size:15px;letter-spacing:2px;border-bottom:1px solid rgba(200,169,110,.08)}
+  .nav-links a::after{display:none}
+  .nav-cta{margin:16px auto 0;width:200px;border-radius:2px!important;padding:14px 0!important;display:block}
+
+  /* Hero */
+  #hero{padding:0 20px}
+  .hero-h1{font-size:clamp(36px,10vw,60px)}
+  .hero-stats{gap:28px;flex-wrap:wrap;justify-content:center;margin-top:48px}
+  .stat-num{font-size:28px}
+  .hero-btns{flex-direction:column;align-items:center;gap:12px}
+  .btn-gold,.btn-outline{width:220px;text-align:center;padding:14px 0}
+
+  /* Sections */
+  .sec{padding:64px 20px}
+  .container{padding:0}
+
+  /* About */
+  .about-grid{grid-template-columns:1fr;gap:36px}
+  .about-badge{bottom:-16px;right:-8px;padding:16px}
+  .badge-big{font-size:28px}
+  .about-content h2{font-size:28px}
+
+  /* Services */
+  .srv-grid{grid-template-columns:1fr;gap:16px}
+  .srv-card{padding:28px 22px}
+
+  /* Projects */
+  .proj-grid{grid-template-columns:1fr;gap:18px}
+  .proj-card.feat{grid-column:span 1}
+  .proj-card.feat .proj-img-inner{aspect-ratio:16/9}
+  .proj-filter{gap:6px}
+  .flt{padding:7px 14px;font-size:10px}
+  .proj-metas{gap:12px}
+  .proj-metas span{font-size:10px}
+  .proj-metas strong{font-size:11.5px}
+
+  /* Numbers */
+  #numbers{padding:60px 20px}
+  .num-grid{grid-template-columns:repeat(2,1fr);gap:28px;max-width:100%}
+  .num-val{font-size:42px}
+
+  /* Team */
+  .team-grid{grid-template-columns:repeat(2,1fr);gap:16px}
+  .team-card{padding:24px 16px}
+  .team-av{width:76px;height:76px;font-size:28px}
+
+  /* Contact */
+  .contact-grid{grid-template-columns:1fr;gap:40px}
+  .contact-info h2{font-size:28px}
+  .crow{grid-template-columns:1fr}
+
+  /* Footer */
+  .foot-inner{grid-template-columns:1fr;gap:32px;padding-bottom:32px}
+  footer{padding:40px 20px}
+  .foot-bot{flex-direction:column;gap:16px;text-align:center}
+  .foot-col:nth-child(3),.foot-col:nth-child(4){display:none}
+
+  /* Section headers */
+  .stitle{font-size:clamp(26px,7vw,36px)}
+  .sdesc{font-size:13.5px}
+}
+
+/* ══════════════════════════════════
+   SMALL MOBILE  (≤420px)
+══════════════════════════════════ */
+@media(max-width:420px){
+  .hero-h1{font-size:34px}
+  .team-grid{grid-template-columns:1fr}
+  .num-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-stats{gap:20px}
+  .stat-num{font-size:24px}
+}
 </style>
 </head>
 <body>
@@ -242,13 +358,16 @@ footer{position:relative;z-index:2;background:#050508;padding:58px 60px;border-t
   <a href="#" class="logo-wrap">
     <img src="logo.png" alt="HŞ İnşaat" style="height:56px;width:auto;object-fit:contain;mix-blend-mode:screen;filter:brightness(1.1)"/>
   </a>
-  <ul class="nav-links">
-    <li><a href="#about">Hakkımızda</a></li>
-    <li><a href="#services">Hizmetler</a></li>
-    <li><a href="#projects">Projeler</a></li>
-    <li><a href="#team">Ekibimiz</a></li>
-    <li><a href="#contact" class="nav-cta">İletişim</a></li>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about" onclick="closeMenu()">Hakkımızda</a></li>
+    <li><a href="#services" onclick="closeMenu()">Hizmetler</a></li>
+    <li><a href="#projects" onclick="closeMenu()">Projeler</a></li>
+    <li><a href="#team" onclick="closeMenu()">Ekibimiz</a></li>
+    <li><a href="#contact" class="nav-cta" onclick="closeMenu()">İletişim</a></li>
   </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menü" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -1018,11 +1137,24 @@ window.addEventListener('load', ()=>{
 
 
 /* ═══════════════════════════════════════════════════
-   NAV SCROLL
+   NAV SCROLL + HAMBURGER
 ═══════════════════════════════════════════════════ */
 window.addEventListener('scroll',()=>{
   document.getElementById('nav').classList.toggle('scrolled', scrollY>40);
 });
+
+function toggleMenu(){
+  const links = document.getElementById('navLinks');
+  const btn   = document.getElementById('hamburger');
+  links.classList.toggle('open');
+  btn.classList.toggle('open');
+  document.body.style.overflow = links.classList.contains('open') ? 'hidden' : '';
+}
+function closeMenu(){
+  document.getElementById('navLinks').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.body.style.overflow = '';
+}
 
 
 /* ═══════════════════════════════════════════════════
