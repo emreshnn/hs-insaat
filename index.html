@@ -690,7 +690,7 @@ ctaBtn.addEventListener('mouseleave',()=>gsap.to(ctaBtn,{x:0,y:0,duration:.7,eas
 const canvas=document.getElementById('bg-canvas');
 const sc3=new THREE.Scene();
 const cam=new THREE.PerspectiveCamera(65,innerWidth/innerHeight,.1,1000);
-cam.position.set(0,0,55);
+cam.position.set(0,0,42);
 const ren=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
 ren.setSize(innerWidth,innerHeight);
 ren.setPixelRatio(Math.min(devicePixelRatio,2));
@@ -715,20 +715,20 @@ function mkBuilding(w,h,d,floors,x,y,z,op){
 }
 
 [
-  mkBuilding(9,65,7,18,  2, 2,-32,.13),
-  mkBuilding(7,45,6,12, 20,-3,-24,.10),
-  mkBuilding(6,38,5,10,-22,-6,-22,.09),
-  mkBuilding(8,52,7,14,-40, 1,-38,.07),
-  mkBuilding(5,28,5, 8, 38,-10,-20,.08),
-  mkBuilding(7,40,6,11, 30,-1,-34,.07),
-  mkBuilding(5,22,4, 6,-12,-12,-18,.07),
-  mkBuilding(4,18,4, 5, 50,-13,-16,.06),
-  mkBuilding(6,30,5, 8,-55, -8,-45,.05),
-  mkBuilding(7,42,6,12, 55, -4,-42,.05),
+  mkBuilding(9,65,7,18,  2, 2,-32,.45),
+  mkBuilding(7,45,6,12, 20,-3,-24,.35),
+  mkBuilding(6,38,5,10,-22,-6,-22,.30),
+  mkBuilding(8,52,7,14,-40, 1,-38,.25),
+  mkBuilding(5,28,5, 8, 38,-10,-20,.28),
+  mkBuilding(7,40,6,11, 30,-1,-34,.25),
+  mkBuilding(5,22,4, 6,-12,-12,-18,.22),
+  mkBuilding(4,18,4, 5, 50,-13,-16,.20),
+  mkBuilding(6,30,5, 8,-55, -8,-45,.18),
+  mkBuilding(7,42,6,12, 55, -4,-42,.18),
 ].forEach(b=>sc3.add(b));
 
 const grid=new THREE.GridHelper(300,40,0x00d4ff,0x00d4ff);
-grid.material.transparent=true;grid.material.opacity=.04;
+grid.material.transparent=true;grid.material.opacity=.18;
 grid.position.set(0,-34,-10);sc3.add(grid);
 
 function mkCrane(x,y,z,scale,op){
@@ -738,9 +738,9 @@ function mkCrane(x,y,z,scale,op){
   const l=new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts),mat);
   l.scale.setScalar(scale);l.position.set(x,y,z);return l;
 }
-sc3.add(mkCrane(-28,-2,-14,1,.16));
-sc3.add(mkCrane(22,4,-18,.7,.12));
-sc3.add(mkCrane(48,-6,-20,.55,.09));
+sc3.add(mkCrane(-28,-2,-14,1,.50));
+sc3.add(mkCrane(22,4,-18,.7,.38));
+sc3.add(mkCrane(48,-6,-20,.55,.28));
 
 function mkIBeam(x,y,z,rot,op){
   const mat=new THREE.LineBasicMaterial({color:0x00d4ff,transparent:true,opacity:op});
@@ -751,16 +751,16 @@ function mkIBeam(x,y,z,rot,op){
   const b=new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts),mat);
   b.rotation.set(...rot);b.position.set(x,y,z);return b;
 }
-const beams=[mkIBeam(-18,8,-25,[0,0,.3],.07),mkIBeam(15,12,-28,[0,.5,0],.06),mkIBeam(-42,-5,-35,[.2,0,0],.05)];
+const beams=[mkIBeam(-18,8,-25,[0,0,.3],.22),mkIBeam(15,12,-28,[0,.5,0],.18),mkIBeam(-42,-5,-35,[.2,0,0],.15)];
 beams.forEach(b=>sc3.add(b));
 
 const N=1200;const pp=new Float32Array(N*3),pc=new Float32Array(N*3);
 for(let i=0;i<N;i++){pp[i*3]=(Math.random()-.5)*240;pp[i*3+1]=(Math.random()-.5)*200;pp[i*3+2]=(Math.random()-.5)*100;const t=Math.random();pc[i*3]=0;pc[i*3+1]=t*.5;pc[i*3+2]=t;}
 const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pp,3));pg.setAttribute('color',new THREE.BufferAttribute(pc,3));
-const dust=new THREE.Points(pg,new THREE.PointsMaterial({size:.22,vertexColors:true,transparent:true,opacity:.6}));
+const dust=new THREE.Points(pg,new THREE.PointsMaterial({size:.35,vertexColors:true,transparent:true,opacity:.85}));
 sc3.add(dust);
 
-const moon=new THREE.Mesh(new THREE.SphereGeometry(3,16,16),new THREE.MeshBasicMaterial({color:0x00d4ff,transparent:true,opacity:.04,wireframe:true}));
+const moon=new THREE.Mesh(new THREE.SphereGeometry(3,16,16),new THREE.MeshBasicMaterial({color:0x00d4ff,transparent:true,opacity:.14,wireframe:true}));
 moon.position.set(45,35,-50);sc3.add(moon);
 
 let trx=0,try2=0,crx=0,cry=0;
@@ -851,53 +851,8 @@ gsap.from(['.sig-lbl','.sig-ttl','.sig-sub','.contact-grid','.sig-btn'],{
 });
 gsap.from('.sig-dot',{scale:0,duration:.8,ease:'back.out(2)',scrollTrigger:{trigger:'#s-signal',start:'top 65%'}});
 
-/* ── TWEAKS ── */
-window.addEventListener('message',e=>{
-  if(e.data?.type==='__activate_edit_mode')document.getElementById('twk').style.display='flex';
-  if(e.data?.type==='__deactivate_edit_mode')document.getElementById('twk').style.display='none';
-});
-window.parent.postMessage({type:'__edit_mode_available'},'*');
 </script>
 
-<!-- TWEAKS -->
-<div id="twk" style="display: flex; position: fixed; bottom: 3.5rem; right: 2rem; z-index: 9990; background: rgba(6, 12, 18, 0.97); border: 1px solid rgba(0, 212, 255, 0.2); backdrop-filter: blur(24px); padding: 1.5rem; width: 255px; flex-direction: column; gap: 1.1rem; font-family: &quot;JetBrains Mono&quot;, monospace; font-size: 0.65rem; color: rgb(59, 79, 98);">
-  <div style="display:flex;justify-content:space-between;align-items:center;">
-    <span style="color:#00d4ff;letter-spacing:.3em;text-transform:uppercase;font-size:.58rem;">Tweaks</span>
-    <button onclick="document.getElementById('twk').style.display='none';window.parent.postMessage({type:'__edit_mode_dismissed'},'*')" style="background:none;border:none;color:#3b4f62;cursor:pointer;font-size:1.2rem;line-height:1;">×</button>
-  </div>
-  <div>
-    <div style="margin-bottom:.5rem;color:#4a5568;letter-spacing:.2em;text-transform:uppercase;font-size:.55rem;">Vurgu rengi</div>
-    <div style="display:flex;gap:.4rem;">
-      <button onclick="setA('#00d4ff')" style="width:26px;height:26px;background:#00d4ff;border:none;cursor:pointer;" title="Cyan"></button>
-      <button onclick="setA('#d4952a')" style="width:26px;height:26px;background:#d4952a;border:none;cursor:pointer;" title="Altın"></button>
-      <button onclick="setA('#e05050')" style="width:26px;height:26px;background:#e05050;border:none;cursor:pointer;" title="Kırmızı"></button>
-      <button onclick="setA('#22c55e')" style="width:26px;height:26px;background:#22c55e;border:none;cursor:pointer;" title="Yeşil"></button>
-      <button onclick="setA('#a855f7')" style="width:26px;height:26px;background:#a855f7;border:none;cursor:pointer;" title="Mor"></button>
-    </div>
-  </div>
-  <div>
-    <div style="margin-bottom:.5rem;color:#4a5568;letter-spacing:.2em;text-transform:uppercase;font-size:.55rem;">Arka plan</div>
-    <div style="display:flex;gap:.35rem;flex-wrap:wrap;">
-      <button onclick="setBg('#02060a')" style="padding:.2rem .45rem;background:#02060a;border:1px solid rgba(0,212,255,.3);color:#00d4ff;cursor:pointer;font-family:inherit;font-size:.55rem;">Void</button>
-      <button onclick="setBg('#060412')" style="padding:.2rem .45rem;background:#060412;border:1px solid rgba(0,212,255,.3);color:#00d4ff;cursor:pointer;font-family:inherit;font-size:.55rem;">Deep</button>
-      <button onclick="setBg('#080c05')" style="padding:.2rem .45rem;background:#080c05;border:1px solid rgba(0,212,255,.3);color:#00d4ff;cursor:pointer;font-family:inherit;font-size:.55rem;">Forest</button>
-      <button onclick="setBg('#0a0806')" style="padding:.2rem .45rem;background:#0a0806;border:1px solid rgba(0,212,255,.3);color:#00d4ff;cursor:pointer;font-family:inherit;font-size:.55rem;">Steel</button>
-    </div>
-  </div>
-  <div>
-    <div style="margin-bottom:.5rem;color:#4a5568;letter-spacing:.2em;text-transform:uppercase;font-size:.55rem;">Parçacık</div>
-    <input type="range" min="100" max="2400" value="1200" style="width:100%;accent-color:#00d4ff;" oninput="dust.material.opacity=Math.min(.9,this.value/1200*.6);document.getElementById('ptv').textContent=this.value+' pts'">
-    <div id="ptv" style="color:#00d4ff;margin-top:.3rem;font-size:.55rem;">2400 pts</div>
-  </div>
-  <div>
-    <div style="margin-bottom:.5rem;color:#4a5568;letter-spacing:.2em;text-transform:uppercase;font-size:.55rem;">Ticker hızı</div>
-    <input type="range" min="10" max="80" value="35" style="width:100%;accent-color:#00d4ff;" oninput="document.querySelector('.ticker-track').style.animationDuration=this.value+'s'">
-  </div>
-</div>
-<script>
-function setA(c){document.documentElement.style.setProperty('--cyan',c);}
-function setBg(c){document.documentElement.style.setProperty('--bg',c);document.body.style.background=c;}
-</script>
 
 
 </body></html>
