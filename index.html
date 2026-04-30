@@ -206,53 +206,73 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);padding:2
 .ft-copy{font-family:var(--fmono);font-size:.55rem;letter-spacing:.18em;color:var(--muted);opacity:.4;}
 
 @media(max-width:768px){
-  body{cursor:auto;}
+  body{cursor:auto;overflow-x:hidden;}
   #cur,#cur-ring{display:none;}
-
-  /* Header */
-  #site-header{padding:.85rem 1.2rem;}
-  .hdr-clock{display:none;}
-  .hdr-logo-text{font-size:.55rem;letter-spacing:.22em;}
-  .hdr-right{gap:1rem;}
-
-  /* Entry */
-  .entry-line1{font-size:clamp(4rem,20vw,20rem);}
-  .entry-line2{font-size:clamp(1.4rem,6vw,6.5rem);letter-spacing:.15em;}
-  .entry-sub{font-size:.58rem;letter-spacing:.18em;}
-  .bracket{display:none;}
-  .hrule{width:16vw;}
-
-  /* Manifesto */
-  #s-manifesto{min-height:260vh;}
-  .manifesto-stick{padding:0 6vw;}
-  .m-text{font-size:clamp(1.3rem,4.8vw,4.2rem);}
-  .m-stats{gap:1.5rem;flex-wrap:wrap;margin-top:3rem;}
-  .sn{font-size:2rem;}.sn span{font-size:1rem;}
-
-  /* Projects — native yatay scroll */
-  #s-projects{min-height:auto;padding:8vh 0 4vh;}
-  .proj-stick{position:relative!important;height:auto!important;max-height:none!important;width:100%!important;max-width:100%!important;inset:auto!important;transform:none!important;}
-  .proj-hdr{padding:0 6vw;margin-bottom:1.8rem;}
-  .proj-track{overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding:0 6vw 1.5rem;gap:1rem;transform:none!important;}
-  .pcard{flex:0 0 82vw;height:58vh;min-height:400px;scroll-snap-align:start;}
-
-  /* Systems */
-  #s-systems{padding:8vh 6vw;}
-  .sys-grid{grid-template-columns:1fr;}
-  .sys-hdr{margin-bottom:2.5rem;flex-direction:column;gap:.8rem;align-items:flex-start;}
-  .sys-ttl{font-size:clamp(2rem,8vw,5rem);}
-
-  /* İletişim */
-  .contact-grid{grid-template-columns:1fr;}
-  #s-signal{padding:8vh 6vw;}
-  .sig-ttl{font-size:clamp(2rem,8vw,6rem);}
-  .sig-ring:nth-child(3){display:none;}.sig-ring:nth-child(4){display:none;}
-
-  /* Footer */
-  footer{flex-direction:column;gap:.8rem;align-items:flex-start;padding:1.5rem 6vw;margin-bottom:3rem;}
-
-  /* Nav dots */
   #nav-dots{display:none;}
+  .bracket{display:none;}
+
+  /* ── Header ── */
+  #site-header{padding:.8rem 1.2rem;}
+  .hdr-clock{display:none;}
+  .hdr-logo-text{font-size:.52rem;letter-spacing:.2em;}
+  .hdr-logo-text strong{letter-spacing:.2em;}
+  .hdr-right{gap:.8rem;}
+  .hdr-status span{display:none;}
+
+  /* ── Entry ── */
+  #s-entry{padding:0 1.5rem;}
+  .entry-line1{font-size:clamp(5.5rem,24vw,20rem);}
+  .entry-line2{font-size:clamp(1.6rem,7vw,6.5rem);letter-spacing:.18em;}
+  .entry-eye{font-size:.52rem;letter-spacing:.25em;}
+  .entry-sub{font-size:.55rem;letter-spacing:.15em;}
+  .hrule{display:none;}
+
+  /* ── Manifesto ── */
+  #s-manifesto{min-height:260vh;}
+  .manifesto-stick{padding:0 7vw;}
+  .m-text{font-size:clamp(1.35rem,5vw,4.2rem);}
+  .m-stats{gap:2rem 3rem;flex-wrap:wrap;margin-top:2.5rem;}
+  .sn{font-size:2.2rem;}.sn span{font-size:1rem;}
+  .sl{font-size:.55rem;}
+
+  /* ── Projects ── */
+  #s-projects{min-height:auto;padding:7vh 0 3vh;}
+  .proj-stick{position:relative;height:auto;width:100%;}
+  .proj-hdr{padding:0 7vw;margin-bottom:1.5rem;flex-direction:column;gap:.5rem;}
+  .proj-track{
+    overflow-x:auto;-webkit-overflow-scrolling:touch;
+    scroll-snap-type:x mandatory;
+    padding:0 7vw 1.5rem;gap:1rem;
+  }
+  .proj-track::-webkit-scrollbar{display:none;}
+  .pcard{flex:0 0 80vw;height:auto;min-height:420px;scroll-snap-align:start;}
+  .pcard-name{font-size:1.5rem;}
+  .pcard-stat{font-size:1.3rem;}
+
+  /* ── Systems ── */
+  #s-systems{padding:7vh 7vw;background-size:36px 36px;}
+  .sys-hdr{flex-direction:column;gap:.6rem;align-items:flex-start;margin-bottom:2.5rem;}
+  .sys-ttl{font-size:clamp(2.2rem,9vw,5rem);}
+  .sys-grid{grid-template-columns:1fr;gap:1px;}
+  .sys-item{padding:2rem 1.5rem;}
+  .sys-ico{width:40px;height:40px;margin-bottom:1.2rem;}
+
+  /* ── İletişim ── */
+  #s-signal{padding:7vh 7vw;}
+  .sig-ttl{font-size:clamp(2.2rem,9vw,6rem);}
+  .sig-sub{font-size:.62rem;}
+  .contact-grid{grid-template-columns:1fr;max-width:100%;}
+  .contact-item{padding:1.2rem 1rem;}
+  .contact-item-val{font-size:.68rem;}
+  .sig-ring:nth-child(3),.sig-ring:nth-child(4){display:none;}
+  .sig-btn{padding:.9rem 2rem;font-size:.62rem;}
+
+  /* ── Footer ── */
+  footer{flex-direction:column;gap:.8rem;align-items:flex-start;padding:1.5rem 7vw;margin-bottom:3.5rem;}
+  .ft-copy{font-size:.5rem;}
+
+  /* ── Ticker ── */
+  .ticker-track{font-size:.52rem;letter-spacing:.15em;}
 }
 </style>
 </head>
@@ -370,12 +390,12 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);padding:2
 
 <!-- ════════════ SCENE 3 — PROJELER ════════════ -->
 <section class="scene" id="s-projects">
-  <div class="pin-spacer" style="order: 0; place-self: auto; grid-area: auto; z-index: auto; float: none; flex-shrink: 1; display: flex; margin: 0px; inset: 0px auto auto; position: relative; flex-basis: auto; overflow: visible; box-sizing: border-box; width: 1121px; height: 3386px; padding: 0px 0px 2735px;"><div class="proj-stick" style="translate: none; rotate: none; scale: none; inset: 0px auto auto 0px; margin: 0px; max-width: 1120.8px; width: 1120.8px; max-height: 651.2px; height: 651.2px; padding: 0px; transform: translate(0px, 0px);">
+  <div class="proj-stick">
     <div class="proj-hdr">
       <span class="proj-lbl">// REFERANS PROJELERİ</span>
       <span class="proj-ttl">Seçilmiş yapılar &nbsp;2018–2027</span>
     </div>
-    <div class="proj-track" id="ptrak" style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+    <div class="proj-track" id="ptrak">
 
       <!-- KULE 29 -->
       <div class="pcard" style="translate: none; rotate: none; scale: none; transform: perspective(900px);">
@@ -513,7 +533,7 @@ footer{position:relative;z-index:10;border-top:1px solid var(--border);padding:2
       </div>
 
     </div>
-  </div></div>
+  </div>
 </section>
 
 <!-- ════════════ SCENE 4 — SİSTEMLER ════════════ -->
